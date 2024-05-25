@@ -1,0 +1,56 @@
+{
+  "summary": "The probable diagnosis is seasonal allergies, also known as allergic rhinitis. This condition occurs when your immune system reacts to allergens like pollen, dust, or pet dander, causing symptoms such as a runny or stuffy nose, sneezing, and itchy or watery eyes. These symptoms are generally non-emergent and can often be managed with over-the-counter medications and home care.",
+  "triageLevel": "self-care",
+  "diagnostic": [{ "name": "None needed", "code": "" }],
+  "selfCareTips": "Stay indoors when pollen counts are high, keep windows closed, use air conditioning, and shower after being outside to remove allergens from your skin and hair.",
+  "OTC": [
+    {
+      "name": "Loratadine",
+      "type": "Antihistamine",
+      "dose": "10 mg",
+      "frequency": "Once daily",
+      "source": "Available at most pharmacies"
+    },
+    {
+      "name": "Fluticasone nasal spray",
+      "type": "Nasal corticosteroid",
+      "dose": "2 sprays in each nostril",
+      "frequency": "Once daily",
+      "source": "Available at most pharmacies"
+    }
+  ],
+  "miraCareOptions": [
+    {
+      "careType": "virtual_primary_care",
+      "active": "true",
+      "description": "Consult a virtual primary care provider if symptoms persist or worsen."
+    }
+  ],
+  "miraOSsummary": {
+    "chiefComplaint": "Runny nose, sneezing, and itchy eyes",
+    "dx": [
+      {
+        "diagnosis": "Allergic rhinitis",
+        "probability": "High",
+        "ICD10CMCode": "J30.1"
+      }
+    ],
+    "reasonsForDx": "The symptoms of runny nose, sneezing, and itchy eyes are characteristic of allergic rhinitis, especially if they occur seasonally or in response to specific allergens."
+  },
+  "conditionCategory": "Allergy",
+  "rxRecommendation": [
+    {
+      "name": "Loratadine",
+      "type": "Antihistamine",
+      "dose": "10 mg",
+      "instruction": "Take once daily"
+    },
+    {
+      "name": "Fluticasone nasal spray",
+      "type": "Nasal corticosteroid",
+      "dose": "2 sprays in each nostril",
+      "instruction": "Use once daily"
+    }
+  ],
+  "rxExplanation": "Loratadine is a non-drowsy antihistamine that helps relieve allergy symptoms. Fluticasone nasal spray reduces inflammation and treats nasal symptoms of allergies."
+}
