@@ -1,0 +1,8 @@
+.menu {
+  position: sticky;
+  width: 100%;
+}
+
+.menu > nav {
+  max-width: var(--default-desktop-screen-width);
+}
