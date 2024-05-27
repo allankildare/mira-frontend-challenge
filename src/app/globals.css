@@ -5,11 +5,12 @@
 :root {
   --foreground: rgb(20, 20, 20);
   --background-color: rgb(250, 250, 250);
-  --mira-green: rgb(30, 199, 80);
+  --mira-green: rgb(30, 200, 81);
   --mira-dark-green: rgb(18, 119, 0);
   --mira-darker-green: rgb(1, 49, 38);
   --mira-orange: rgb(255, 192, 0);
   --default-desktop-screen-width: 1440px;
+  --card-background-color: rgb(240, 240, 240);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,12 +29,78 @@ body {
 section {
   max-width: var(--default-desktop-screen-width);
   margin: 0 auto;
-  padding: 20px 32px 28px
+  padding: 20px 32px 28px;
+}
+
+textarea {
+  padding: 0.5rem;
+}
+
+.bg-mira-green {
+  background-color: var(--mira-green);
+}
+
+.bg-mira-dark-green {
+  background-color: var(--mira-dark-green);
+}
+
+.bg-mira-darker-green {
+  background-color: var(--mira-darker-green);
+}
+
+.text-mira-green {
+  color: var(--mira-green);
+}
+
+.text-mira-dark-green {
+  color: var(--mira-dark-green);
+}
+
+.text-mira-darker-green {
+  color: var(--mira-darker-green);
+}
+
+hr {
+  border-color: rgb(160, 160, 160); /* for Chrome and Safari*/
+  background-color: rgb(160, 160, 160); /* for Firefox and Opera */
+  color: rgb(160, 160, 160); /* for IE7+ */
+}
+
+.card-mira {
+  background-color: var(--card-background-color);
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  max-width: 768px;
 }
 
 .card-mira-title {
   color: var(--mira-darker-green);
 }
+
+.modal-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  height: 100%;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.modal-view {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.modal-wrapper {
+  @apply max-w-2xl bg-gray-200 m-32 mx-auto py-4 rounded;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
