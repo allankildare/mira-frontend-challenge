@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { DataContext } from '~/contexts/dataContext'
 
 export function CareNavigatorView() {
-  const { currentData, deleteMedicine } = useContext(DataContext)
+  const { currentData }: any = useContext(DataContext)
+
   return (
     <>
       <h2 className="text-xl font-medium">Condition Category</h2>
