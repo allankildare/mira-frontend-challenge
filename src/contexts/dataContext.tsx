@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import data from '~/data/index.json'
 
-export const DataContext = createContext(null)
+export const DataContext = createContext(data)
 
 export function DataContextProvider({ children }: { children: ReactNode }) {
   const [currentData, setCurrentData] = useState(data)
@@ -23,7 +23,7 @@ export function DataContextProvider({ children }: { children: ReactNode }) {
     setCurrentData({ ...currentData, OTC: filteredOTC })
   }
   return (
-    <DataContext.Provider value={{ currentData, deleteMedicine }}>
+    <DataContext.Provider value={{ currentData, deleteMedicine } as any}>
       {children}
     </DataContext.Provider>
   )
