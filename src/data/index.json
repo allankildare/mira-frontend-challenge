@@ -1,4 +1,7 @@
 {
+  "provider": {
+    "name": "Ozita Cooper, MD"
+  },
   "summary": "The probable diagnosis is seasonal allergies, also known as allergic rhinitis. This condition occurs when your immune system reacts to allergens like pollen, dust, or pet dander, causing symptoms such as a runny or stuffy nose, sneezing, and itchy or watery eyes. These symptoms are generally non-emergent and can often be managed with over-the-counter medications and home care.",
   "triageLevel": "self-care",
   "diagnostic": [{ "name": "None needed", "code": "" }],
