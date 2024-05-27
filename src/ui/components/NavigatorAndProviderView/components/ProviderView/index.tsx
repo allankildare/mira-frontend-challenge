@@ -6,7 +6,7 @@ import { DataContext } from '~/contexts/dataContext'
 
 export function ProviderView() {
   const [isModalAddMedicineOpen, setIsModalAddMedicineOpen] = useState(false)
-  const { currentData, deleteMedicine } = useContext(DataContext)
+  const { currentData, deleteMedicine }: any = useContext(DataContext)
 
   function addMedicine() {
     setIsModalAddMedicineOpen(true)
