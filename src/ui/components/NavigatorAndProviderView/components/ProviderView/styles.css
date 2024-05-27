@@ -1,0 +1,22 @@
+.provider-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.provider-details summary {
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+}
+
+.provider-details summary:after {
+  content: '+';
+  color: #f1f1f1;
+  position: absolute;
+  right: 16px;
+  transform-origin: center;
+  transition: 0.8s ease;
+}
+
+.provider-details[open] summary:after {
+  content: '-';
+}
