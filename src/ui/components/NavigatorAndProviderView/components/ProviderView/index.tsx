@@ -49,10 +49,6 @@ export function ProviderView() {
     setIsModalAddMedicineOpen(false)
   }
 
-  useEffect(() => {
-    localStorage.setItem('mira-data', JSON.stringify(currentData))
-  }, [currentData])
-
   function handleDeleteMedicine(event: any, index: number) {
     event.preventDefault()
     deleteMedicine(index)
