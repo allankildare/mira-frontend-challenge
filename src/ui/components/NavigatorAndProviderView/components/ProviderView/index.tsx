@@ -4,12 +4,7 @@ import './styles.css'
 import { useContext, useEffect, useState, MouseEvent } from 'react'
 import { DataContext } from '~/contexts/dataContext'
 import { Modal } from '~/ui/components/Modal'
-import {
-  Input,
-  Select,
-  SelectItem,
-  Button,
-} from '@nextui-org/react'
+import { Input, Select, SelectItem, Button } from '@nextui-org/react'
 
 export const MEDICINE_TYPES = [
   { text: 'Antihistamine', value: 'antihistamine' },
@@ -26,8 +21,12 @@ export const MEDICINE_TYPES = [
 
 export function ProviderView() {
   const [isModalAddMedicineOpen, setIsModalAddMedicineOpen] = useState(false)
-  const { currentData, addMedicine, deleteMedicine }: any =
-    useContext(DataContext)
+  const {
+    currentData,
+    addMedicine,
+    deleteMedicine,
+    updateComplaintAndSelfCare,
+  }: any = useContext(DataContext)
   const [medicineForm, setMedicineForm] = useState({
     name: '',
     type: '',
@@ -35,6 +34,11 @@ export function ProviderView() {
     frequency: '',
     source: 'Available at most pharmacies',
   })
+
+  const [chiefComplaint, setChiefComplaint] = useState(
+    currentData.miraOSsummary.chiefComplaint
+  )
+  const [selfCareTips, setSelfCareTips] = useState(currentData.selfCareTips)
 
   function openMedicineModal(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
@@ -45,17 +49,6 @@ export function ProviderView() {
     setIsModalAddMedicineOpen(false)
   }
 
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const dataInitial =
-  //       typeof localStorage.getItem('mira-data') === 'string'
-  //         ? localStorage.getItem('mira-data')
-  //         : data
-  //     const miraDataParsed = JSON.parse(dataInitial)
-  //     setCurrentData(miraDataParsed)
-  //   }
-  // }, [])
-
   useEffect(() => {
     localStorage.setItem('mira-data', JSON.stringify(currentData))
   }, [currentData])
@@ -63,6 +56,10 @@ export function ProviderView() {
   function handleDeleteMedicine(event: any, index: number) {
     event.preventDefault()
     deleteMedicine(index)
+  }
+
+  function handleUpdateChiefComplaintAndSelfCare() {
+    updateComplaintAndSelfCare({ chiefComplaint, selfCareTips })
   }
 
   return (
@@ -136,6 +133,7 @@ export function ProviderView() {
       <h2 className="text-xl font-medium mt-2">Treatment Plan</h2>
       <h3>
         <b>Provider Name:</b> {currentData.provider.name}
+        <button className="italic underline">(edit)</button>
       </h3>
       <form className="flex flex-col">
         <label htmlFor="selfCareTips" className="font-medium mt-2 mb-1">
@@ -143,9 +141,12 @@ export function ProviderView() {
         </label>
         <textarea
           name="selfCareTips"
-          defaultValue={currentData.miraOSsummary.chiefComplaint}
+          value={chiefComplaint}
           cols={30}
           rows={3}
+          onChange={(event) => {
+            setChiefComplaint(event.target.value)
+          }}
         />
         {/* <Textarea
           label="Chief complaint"
@@ -195,14 +196,21 @@ export function ProviderView() {
         </label>
         <textarea
           name="selfCareTips"
-          defaultValue={currentData.selfCareTips}
+          value={selfCareTips}
           cols={30}
           rows={3}
+          onChange={(event) => {
+            setSelfCareTips(event.target.value)
+          }}
         />
 
         <button
           className="w-fit bg-mira-dark-green text-white px-2 py-1 rounded mt-2 mb-1"
           type="submit"
+          onClick={(event) => {
+            event.preventDefault()
+            handleUpdateChiefComplaintAndSelfCare()
+          }}
         >
           Finish
         </button>
