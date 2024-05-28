@@ -1,0 +1,5 @@
+.mira-footer {
+  min-height: 7vh;
+  height: 100%;
+  @apply bg-stone-200 text-lg flex justify-center items-center w-full
+}
