@@ -79,6 +79,11 @@ export default function DataContextProvider({ children }: { children: ReactNode 
       miraOSsummary: { ...currentState.miraOSsummary, chiefComplaint },
     }))
   }
+
+  function updateProviderName(newName: string) {
+    setCurrentData((currentState: any) => ({ ...currentState, provider: { ...currentState.provider, name: newName } }))
+  }
+
   return (
     <DataContext.Provider
       value={
@@ -87,6 +92,7 @@ export default function DataContextProvider({ children }: { children: ReactNode 
           currentData,
           isProviderView,
           updateComplaintAndSelfCare,
+          updateProviderName,
           sendMessage,
           toggleView,
           addMedicine,
