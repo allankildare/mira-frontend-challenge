@@ -2,7 +2,8 @@
 import { Chat, Menu } from '~/ui/components'
 import { HomePage } from '~/ui/views'
 import { NextUIProvider } from '@nextui-org/react'
-import { DataContextProvider } from '~/contexts/dataContext'
+import dynamic from 'next/dynamic'
+const DataContextProvider = dynamic(() => import('~/contexts/dataContext'), { ssr: false })
 
 export default function Home() {
   return (
