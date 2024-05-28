@@ -3,9 +3,6 @@
   bottom: 1rem;
 }
 
-.messages > .msg:nth-child(2n + 1) {
-  @apply px-2 py-1 mb-2 rounded;
-}
-.messages > .msg:nth-child(2n) {
+.messages > .msg {
   @apply px-2 py-1 mb-2 rounded;
 }

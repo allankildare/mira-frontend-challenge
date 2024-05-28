@@ -26,12 +26,12 @@ export function Chat() {
   return (
     <div className="fixed bottom-3 right-3 flex flex-col items-end">
       <div className="bg-gray-50 shadow-md rounded-md px-2 py-2 mb-3">
-        <div className="messages p-2 mb-2">
+        <div className="messages p-2">
           {chat.map((msg: Message, index: number) => {
             return (
               <div
                 key={`msg${index}`}
-                className={`msg bg-cyan-100`}
+                className="msg bg-cyan-100"
               >
                 {msg.text}
               </div>
