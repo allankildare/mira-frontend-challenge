@@ -83,74 +83,70 @@ export function OrderDetails() {
       </div>
 
       {isEditModalOpen && (
-        <div className="modal-bg">
-          <Modal title="Edit order detail" closeFunc={closeModal}>
-            <form className="block mx-auto">
-              <Select
-                label="Status"
-                defaultSelectedKeys={[status]}
-                className="mb-2"
-                onChange={(event) => {
-                  setStatus(event.target.value as StatusType)
-                }}
+        <Modal title="Edit order detail" closeFunc={closeModal}>
+          <form className="block mx-auto">
+            <Select
+              label="Status"
+              defaultSelectedKeys={[status]}
+              className="mb-2"
+              onChange={(event) => {
+                setStatus(event.target.value as StatusType)
+              }}
+            >
+              <SelectItem key="pending" value="pending">
+                Reviewing
+              </SelectItem>
+              <SelectItem
+                key="confirmed"
+                value="confirmed"
+                className="text-green-600"
               >
-                <SelectItem key="pending" value="pending">
-                  Reviewing
-                </SelectItem>
-                <SelectItem
-                  key="confirmed"
-                  value="confirmed"
-                  className="text-green-600"
-                >
-                  Confirmed
-                </SelectItem>
-                <SelectItem
-                  key="rejected"
-                  value="rejected"
-                  className="text-red-500"
-                >
-                  Rejected
-                </SelectItem>
-              </Select>
+                Confirmed
+              </SelectItem>
+              <SelectItem
+                key="rejected"
+                value="rejected"
+                className="text-red-500"
+              >
+                Rejected
+              </SelectItem>
+            </Select>
 
-              <Select
-                label="Time of day"
-                defaultSelectedKeys={['morning']}
-                className="mb-2"
-                onChange={(event) => {
-                  setTimeOfDay(event.target.value as TimeOfDay)
-                }}
-              >
-                <SelectItem key="morning" value="morning">
-                  Morning
-                </SelectItem>
-                <SelectItem key="afternoon" value="afternoon">
-                  Afternoon
-                </SelectItem>
-                <SelectItem key="evening" value="evening">
-                  Evening
-                </SelectItem>
-              </Select>
-              <DatePicker
-                label="Intended date"
-                defaultValue={parseDate(
-                  dayjs(intendedDate).format('YYYY-MM-DD')
-                )}
-                className="mb-2"
-                onChange={(date) => {
-                  setIntendedDate(new Date(date.year, date.month - 1, date.day))
-                }}
-              />
-              <Button
-                color="primary"
-                className="ml-auto mr-0"
-                onClick={closeModal}
-              >
-                Finish
-              </Button>
-            </form>
-          </Modal>
-        </div>
+            <Select
+              label="Time of day"
+              defaultSelectedKeys={['morning']}
+              className="mb-2"
+              onChange={(event) => {
+                setTimeOfDay(event.target.value as TimeOfDay)
+              }}
+            >
+              <SelectItem key="morning" value="morning">
+                Morning
+              </SelectItem>
+              <SelectItem key="afternoon" value="afternoon">
+                Afternoon
+              </SelectItem>
+              <SelectItem key="evening" value="evening">
+                Evening
+              </SelectItem>
+            </Select>
+            <DatePicker
+              label="Intended date"
+              defaultValue={parseDate(dayjs(intendedDate).format('YYYY-MM-DD'))}
+              className="mb-2"
+              onChange={(date) => {
+                setIntendedDate(new Date(date.year, date.month - 1, date.day))
+              }}
+            />
+            <Button
+              color="primary"
+              className="ml-auto mr-0"
+              onClick={closeModal}
+            >
+              Finish
+            </Button>
+          </form>
+        </Modal>
       )}
     </div>
   )
