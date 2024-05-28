@@ -33,7 +33,7 @@ section {
 }
 
 textarea {
-  padding: 0.5rem;
+  @apply rounded p-2
 }
 
 .bg-mira-green {
