@@ -1,10 +1,11 @@
 'use client'
 import data from '~/data/index.json'
 import './styles.css'
-import { useContext, useEffect, useState, MouseEvent } from 'react'
+import { useContext, useState, MouseEvent } from 'react'
 import { DataContext } from '~/contexts/dataContext'
 import { Modal } from '~/ui/components/Modal'
 import { Input, Select, SelectItem, Button } from '@nextui-org/react'
+import { ToastContainer, toast } from 'react-toastify'
 
 export const MEDICINE_TYPES = [
   { text: 'Antihistamine', value: 'antihistamine' },
@@ -21,11 +22,13 @@ export const MEDICINE_TYPES = [
 
 export function ProviderView() {
   const [isModalAddMedicineOpen, setIsModalAddMedicineOpen] = useState(false)
+  const [isModalProviderNameOpen, setIsModalProviderNameOpen] = useState(false)
   const {
     currentData,
     addMedicine,
     deleteMedicine,
     updateComplaintAndSelfCare,
+    updateProviderName
   }: any = useContext(DataContext)
   const [medicineForm, setMedicineForm] = useState({
     name: '',
@@ -34,11 +37,13 @@ export function ProviderView() {
     frequency: '',
     source: 'Available at most pharmacies',
   })
+  const [formErrors, setFormErrors] = useState<string[]>([])
 
   const [chiefComplaint, setChiefComplaint] = useState(
     currentData.miraOSsummary.chiefComplaint
   )
   const [selfCareTips, setSelfCareTips] = useState(currentData.selfCareTips)
+  const [providerName, setProviderName] = useState(currentData.provider.name)
 
   function openMedicineModal(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
@@ -49,6 +54,14 @@ export function ProviderView() {
     setIsModalAddMedicineOpen(false)
   }
 
+  function openProviderNameModal() {
+    setIsModalProviderNameOpen(true)
+  }
+
+  function closeProviderNameModal() {
+    setIsModalProviderNameOpen(false)
+  }
+
   function handleDeleteMedicine(event: any, index: number) {
     event.preventDefault()
     deleteMedicine(index)
@@ -56,6 +69,33 @@ export function ProviderView() {
 
   function handleUpdateChiefComplaintAndSelfCare() {
     updateComplaintAndSelfCare({ chiefComplaint, selfCareTips })
+    toast.success('Treatment plan saved successfully')
+  }
+
+  function validateMedicineForm() {
+    const isAnyFieldEmpty = medicineForm.name.length === 0 || medicineForm.dose.length === 0 || medicineForm.type.length === 0 || medicineForm.frequency.length === 0 || medicineForm.source.length === 0
+
+    if (isAnyFieldEmpty) {
+      setFormErrors([...formErrors, 'Oops! It seems some required information is missing'])
+    } else {
+      setFormErrors([])
+      addMedicine(medicineForm)
+      toast.success('Medicine added successfully')
+      closeMedicineModal()
+    }
+  }
+
+  function validateProviderNameForm() {
+    const isFieldEmpty = providerName.length === 0
+
+    if (isFieldEmpty) {
+      setFormErrors([...formErrors, 'Oops! It seems provider name is empty'])
+    } else {
+      setFormErrors([])
+      updateProviderName(providerName)
+      toast.success('Provider name changed successfully')
+      closeProviderNameModal()
+    }
   }
 
   return (
@@ -129,7 +169,7 @@ export function ProviderView() {
       <h2 className="text-xl font-medium mt-2">Treatment Plan</h2>
       <h3>
         <b>Provider Name:</b> {currentData.provider.name}
-        <button className="italic underline">(edit)</button>
+        <button className="italic underline ml-1" onClick={openProviderNameModal}>(edit)</button>
       </h3>
       <form className="flex flex-col">
         <label htmlFor="selfCareTips" className="font-medium mt-2 mb-1">
@@ -218,6 +258,7 @@ export function ProviderView() {
                 label="Medicine name"
                 placeholder="Enter medicine name"
                 className="mb-2"
+                required
                 onChange={(event) => {
                   setMedicineForm((currentState) => {
                     return { ...currentState, name: event.target.value }
@@ -230,6 +271,7 @@ export function ProviderView() {
                 label="Dose"
                 className="mb-2"
                 placeholder="10 mg"
+                required
                 onChange={(event) => {
                   setMedicineForm((currentState) => {
                     return { ...currentState, dose: event.target.value }
@@ -240,6 +282,7 @@ export function ProviderView() {
               <Select
                 label="Type"
                 className="mb-2"
+                required
                 onChange={(event) => {
                   setMedicineForm((currentState) => {
                     return {
@@ -266,6 +309,7 @@ export function ProviderView() {
                 label="Frequency"
                 className="mb-2"
                 placeholder="Once daily"
+                required
                 onChange={(event) => {
                   setMedicineForm((currentState) => {
                     return { ...currentState, frequency: event.target.value }
@@ -278,6 +322,7 @@ export function ProviderView() {
                 label="Source"
                 className="mb-2"
                 defaultValue={medicineForm.source}
+                required
                 onChange={(event) => {
                   setMedicineForm((currentState) => {
                     return { ...currentState, source: event.target.value }
@@ -285,13 +330,16 @@ export function ProviderView() {
                 }}
               />
 
+              {formErrors.length > 0 && (<div className="text-red-500 mb-1">
+                {formErrors[0]}
+              </div>)}
+
               <Button
                 color="primary"
                 className="ml-auto mr-0"
                 onClick={(event) => {
                   event.preventDefault()
-                  addMedicine(medicineForm)
-                  // closeMedicineModal()
+                  validateMedicineForm()
                 }}
               >
                 Finish
@@ -299,6 +347,31 @@ export function ProviderView() {
             </form>
           </Modal>
         )}
+
+        {isModalProviderNameOpen && (
+          <Modal title="Edit provider name" closeFunc={closeProviderNameModal}>
+            <Input label="Provider name" className="mb-2" value={providerName} onChange={(event) => {
+              setProviderName(event.target.value)
+            }} />
+
+            {formErrors.length > 0 && (<div className="text-red-500 mb-1">
+              {formErrors[0]}
+            </div>)}
+
+            <Button
+              color="primary"
+              className="ml-auto mr-0"
+              onClick={(event) => {
+                event.preventDefault()
+                validateProviderNameForm()
+              }}
+            >
+              Finish
+            </Button>
+          </Modal>
+        )}
+
+        <ToastContainer position="bottom-left" closeOnClick />
       </form>
     </>
   )
