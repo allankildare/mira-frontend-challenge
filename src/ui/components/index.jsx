@@ -1,3 +1,4 @@
+export { Chat } from './Chat'
 export { Menu } from './Menu'
 export { Modal } from './Modal'
 export { NavigatorAndProviderView } from './NavigatorAndProviderView'
