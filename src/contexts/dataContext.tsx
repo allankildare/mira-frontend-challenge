@@ -21,19 +21,16 @@ const CHAT_DEFAULT: Message[] = [
 
 export const DataContext = createContext(data)
 
-export function DataContextProvider({ children }: { children: ReactNode }) {
-  const [isProviderView, setIsProviderView] = useState(true)
-  const [currentData, setCurrentData] = useState(data)
-  const [chat, setChat] = useState(CHAT_DEFAULT)
-
-  useEffect(() => {
+export default function DataContextProvider({ children }: { children: ReactNode }) {
+  const [isProviderView, setIsProviderView] = useState(false)
+  const [currentData, setCurrentData] = useState(() => {
     if (typeof window !== 'undefined') {
-      if (localStorage.getItem('mira-data') === null) setCurrentData(data)
-      else {
-        setCurrentData(JSON.parse(localStorage.getItem('mira-data') as string))
-      }
+      const savedData = localStorage.getItem('mira-data')
+      return savedData ? JSON.parse(savedData) : data
     }
-  }, [])
+    return data
+  })
+  const [chat, setChat] = useState(CHAT_DEFAULT)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -61,7 +58,7 @@ export function DataContextProvider({ children }: { children: ReactNode }) {
 
   function deleteMedicine(index: number) {
     const filteredOTC = currentData.OTC.filter(
-      (_, medIndex) => medIndex !== index
+      (_: any, medIndex: number) => medIndex !== index
     )
     setCurrentData({ ...currentData, OTC: filteredOTC })
   }
@@ -72,11 +69,11 @@ export function DataContextProvider({ children }: { children: ReactNode }) {
     )
     const medicineDataFormatted = { ...medicineData, type: typeObj?.text }
     const newMed = [...currentData.OTC, medicineDataFormatted]
-    setCurrentData((currentState) => ({ ...currentState, OTC: newMed }))
+    setCurrentData((currentState: any) => ({ ...currentState, OTC: newMed }))
   }
 
   function updateComplaintAndSelfCare({ selfCareTips, chiefComplaint }: any) {
-    setCurrentData((currentState) => ({
+    setCurrentData((currentState: any) => ({
       ...currentState,
       selfCareTips,
       miraOSsummary: { ...currentState.miraOSsummary, chiefComplaint },
