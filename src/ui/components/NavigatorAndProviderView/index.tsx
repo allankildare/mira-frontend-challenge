@@ -1,15 +1,12 @@
 'use client'
-import { useState } from 'react'
 import data from '~/data/index.json'
 import { ProviderView } from './components/ProviderView'
 import { CareNavigatorView } from './components/CareNavigatorView'
+import { DataContext } from '~/contexts/dataContext'
+import { useContext } from 'react'
 
 export function NavigatorAndProviderView() {
-  const [isProviderView, setIsProviderView] = useState(true)
-
-  function toggleView() {
-    setIsProviderView(!isProviderView)
-  }
+  const { isProviderView, toggleView }: any = useContext(DataContext)
 
   return (
     <div className="card-mira mx-auto">

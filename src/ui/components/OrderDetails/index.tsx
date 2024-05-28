@@ -6,6 +6,7 @@ import { Modal } from '../Modal'
 import { Button, DatePicker, Select, SelectItem } from '@nextui-org/react'
 import dayjs from 'dayjs'
 import { parseDate } from '@internationalized/date'
+import { capitalizeFirstLetter } from '~/utils/string'
 
 type TimeOfDay = 'morning' | 'afternoon' | 'evening'
 type StatusType = 'pending' | 'confirmed' | 'rejected'
@@ -70,7 +71,7 @@ export function OrderDetails() {
             <b>Intended Date:</b> {dayjs(intendedDate).format('MM/DD/YYYY')}
           </li>
           <li>
-            <b>Requested Time of Day:</b> {timeOfDay}
+            <b>Requested Time of Day:</b> {capitalizeFirstLetter(timeOfDay)}
           </li>
           <li>
             <b>Assigned Agent:</b> Ryan Bruns
@@ -140,7 +141,13 @@ export function OrderDetails() {
                   setIntendedDate(new Date(date.year, date.month - 1, date.day))
                 }}
               />
-              <Button color="primary" className="ml-auto mr-0" onClick={closeModal}>Finish</Button>
+              <Button
+                color="primary"
+                className="ml-auto mr-0"
+                onClick={closeModal}
+              >
+                Finish
+              </Button>
             </form>
           </Modal>
         </div>

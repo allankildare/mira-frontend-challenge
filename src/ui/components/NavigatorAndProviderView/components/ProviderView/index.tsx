@@ -1,15 +1,48 @@
 'use client'
 import data from '~/data/index.json'
 import './styles.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, MouseEvent } from 'react'
 import { DataContext } from '~/contexts/dataContext'
+import { Modal } from '~/ui/components/Modal'
+import {
+  Input,
+  Select,
+  SelectItem,
+  Button,
+} from '@nextui-org/react'
+
+export const MEDICINE_TYPES = [
+  { text: 'Antihistamine', value: 'antihistamine' },
+  { text: 'Nasal corticosteroid', value: 'nasalCorticosteroid' },
+  { text: 'Analgesic', value: 'analgesic' },
+  { text: 'Antibiotic', value: 'antibiotic' },
+  { text: 'Antiseptic', value: 'antiseptic' },
+  { text: 'Bronchodilator', value: 'bronchodilator' },
+  { text: 'Diuretic', value: 'diuretic' },
+  { text: 'Antacid', value: 'antacid' },
+  { text: 'Antidepressant', value: 'antidepressant' },
+  { text: 'Antiviral', value: 'antiviral' },
+]
 
 export function ProviderView() {
   const [isModalAddMedicineOpen, setIsModalAddMedicineOpen] = useState(false)
-  const { currentData, deleteMedicine }: any = useContext(DataContext)
+  const { currentData, addMedicine, deleteMedicine }: any =
+    useContext(DataContext)
+  const [medicineForm, setMedicineForm] = useState({
+    name: '',
+    type: '',
+    dose: '',
+    frequency: '',
+    source: 'Available at most pharmacies',
+  })
 
-  function addMedicine() {
+  function openMedicineModal(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault()
     setIsModalAddMedicineOpen(true)
+  }
+
+  function closeMedicineModal() {
+    setIsModalAddMedicineOpen(false)
   }
 
   // useEffect(() => {
@@ -93,10 +126,12 @@ export function ProviderView() {
         <ul className="bg-green-50 py-1 px-2">
           <li>Last Visit Date: 01/06/2022</li>
           <li>Type: In-person</li>
-          <li>Chief Complaint: {data.miraOSsummary.chiefComplaint}</li>
+          <li>Chief Complaint: {currentData.miraOSsummary.chiefComplaint}</li>
           <li>Treatment: Prescribed cough syrup</li>
         </ul>
       </details>
+
+      <hr className="my-4" />
 
       <h2 className="text-xl font-medium mt-2">Treatment Plan</h2>
       <h3>
@@ -148,7 +183,10 @@ export function ProviderView() {
             )
           }
         )}
-        <button className="w-fit text-mira-darker-green" onClick={addMedicine}>
+        <button
+          className="w-fit text-mira-darker-green"
+          onClick={(event) => openMedicineModal(event)}
+        >
           + Add medicine
         </button>
 
@@ -168,6 +206,95 @@ export function ProviderView() {
         >
           Finish
         </button>
+        {isModalAddMedicineOpen && (
+          <Modal title="Add new medicine" closeFunc={closeMedicineModal}>
+            <form>
+              <Input
+                type="text"
+                label="Medicine name"
+                placeholder="Enter medicine name"
+                className="mb-2"
+                onChange={(event) => {
+                  setMedicineForm((currentState) => {
+                    return { ...currentState, name: event.target.value }
+                  })
+                }}
+              />
+
+              <Input
+                type="text"
+                label="Dose"
+                className="mb-2"
+                placeholder="10 mg"
+                onChange={(event) => {
+                  setMedicineForm((currentState) => {
+                    return { ...currentState, dose: event.target.value }
+                  })
+                }}
+              />
+
+              <Select
+                label="Type"
+                className="mb-2"
+                onChange={(event) => {
+                  setMedicineForm((currentState) => {
+                    return {
+                      ...currentState,
+                      type: event.target.value,
+                    }
+                  })
+                }}
+              >
+                {MEDICINE_TYPES.map((medicineType) => {
+                  return (
+                    <SelectItem
+                      key={medicineType.value}
+                      value={medicineType.value}
+                    >
+                      {medicineType.text}
+                    </SelectItem>
+                  )
+                })}
+              </Select>
+
+              <Input
+                type="text"
+                label="Frequency"
+                className="mb-2"
+                placeholder="Once daily"
+                onChange={(event) => {
+                  setMedicineForm((currentState) => {
+                    return { ...currentState, frequency: event.target.value }
+                  })
+                }}
+              />
+
+              <Input
+                type="text"
+                label="Source"
+                className="mb-2"
+                defaultValue={medicineForm.source}
+                onChange={(event) => {
+                  setMedicineForm((currentState) => {
+                    return { ...currentState, source: event.target.value }
+                  })
+                }}
+              />
+
+              <Button
+                color="primary"
+                className="ml-auto mr-0"
+                onClick={(event) => {
+                  event.preventDefault()
+                  addMedicine(medicineForm)
+                  // closeMedicineModal()
+                }}
+              >
+                Finish
+              </Button>
+            </form>
+          </Modal>
+        )}
       </form>
     </>
   )

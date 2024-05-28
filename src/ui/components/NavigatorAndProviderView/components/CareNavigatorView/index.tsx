@@ -11,21 +11,24 @@ export function CareNavigatorView() {
       <h2 className="text-xl font-medium">Triage Level</h2>
       <p>{currentData.triageLevel}</p>
       {currentData.miraCareOptions.map(
-        (careOption: {
-          active: string
-          careType: string
-          description: string
-        }) => {
+        (
+          careOption: {
+            active: string
+            careType: string
+            description: string
+          },
+          index: number
+        ) => {
           return (
             careOption.active === 'true' && (
-              <>
+              <div key={`careOption${index}`}>
                 <h2 className="text-xl font-medium">Mira Care Options</h2>
                 <p className="mb-2">
                   {careOption.careType === 'virtual_primary_care' &&
                     'Virtual Primary Care: '}
                   {careOption.description}
                 </p>
-              </>
+              </div>
             )
           )
         }
