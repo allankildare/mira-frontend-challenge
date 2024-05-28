@@ -74,6 +74,14 @@ export function DataContextProvider({ children }: { children: ReactNode }) {
     const newMed = [...currentData.OTC, medicineDataFormatted]
     setCurrentData((currentState) => ({ ...currentState, OTC: newMed }))
   }
+
+  function updateComplaintAndSelfCare({ selfCareTips, chiefComplaint }: any) {
+    setCurrentData((currentState) => ({
+      ...currentState,
+      selfCareTips,
+      miraOSsummary: { ...currentState.miraOSsummary, chiefComplaint },
+    }))
+  }
   return (
     <DataContext.Provider
       value={
@@ -81,6 +89,7 @@ export function DataContextProvider({ children }: { children: ReactNode }) {
           chat,
           currentData,
           isProviderView,
+          updateComplaintAndSelfCare,
           sendMessage,
           toggleView,
           addMedicine,
