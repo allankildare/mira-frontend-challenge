@@ -9,7 +9,7 @@ const statusData = {
     color: '#202020'
   },
   confirmed: {
-    value: 'Completed',
+    value: 'Confirmed',
     bgColor: '#34c970',
     color: '#202020'
   },
