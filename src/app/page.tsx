@@ -1,5 +1,5 @@
 'use client'
-import { Menu } from '~/ui/components'
+import { Chat, Menu } from '~/ui/components'
 import { HomePage } from '~/ui/views'
 import { NextUIProvider } from '@nextui-org/react'
 import { DataContextProvider } from '~/contexts/dataContext'
@@ -12,6 +12,7 @@ export default function Home() {
         <main>
           <HomePage />
         </main>
+        <Chat />
       </NextUIProvider>
     </DataContextProvider>
   )
