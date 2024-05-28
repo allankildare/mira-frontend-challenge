@@ -1,8 +1,17 @@
 import { useContext } from 'react'
 import { DataContext } from '~/contexts/dataContext'
+import { ToastContainer, toast } from 'react-toastify';
 
 export function CareNavigatorView() {
   const { currentData }: any = useContext(DataContext)
+
+  const notifyCareOptionsSend = () => {
+    toast.success('Care options sent')
+  }
+
+  const notifyCareOptionsCancel = () => {
+    toast.error('Order cancelled')
+  }
 
   return (
     <>
@@ -80,12 +89,13 @@ export function CareNavigatorView() {
           <li>Treatment: Prescribed cough syrup</li>
         </ul>
       </details>
-      <button className="w-fit bg-sky-600 text-white px-2 py-1 rounded mt-2 mb-1">
+      <button className="w-fit bg-sky-600 text-white px-2 py-1 rounded mt-2 mb-1" onClick={notifyCareOptionsSend}>
         Send Care Options
       </button>
-      <button className="w-fit bg-red-600 text-white px-2 py-1 rounded mt-2 mb-1 ml-2">
+      <button className="w-fit bg-red-600 text-white px-2 py-1 rounded mt-2 mb-1 ml-2" onClick={notifyCareOptionsCancel}>
         Cancel Order
       </button>
+      <ToastContainer position="bottom-left" closeOnClick />
     </>
   )
 }
