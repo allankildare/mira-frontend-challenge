@@ -1,12 +1,12 @@
 'use client'
-import data from '~/data/index.json'
 import { ProviderView } from './components/ProviderView'
 import { CareNavigatorView } from './components/CareNavigatorView'
 import { DataContext } from '~/contexts/dataContext'
 import { useContext } from 'react'
 
 export function NavigatorAndProviderView() {
-  const { isProviderView, toggleView }: any = useContext(DataContext)
+  const { currentData, isProviderView, toggleView }: any =
+    useContext(DataContext)
 
   return (
     <div className="card-mira mx-auto">
@@ -26,7 +26,7 @@ export function NavigatorAndProviderView() {
 
       <div>
         <h2 className="text-xl font-medium">Chief Complaint</h2>
-        <p>{data.miraOSsummary.chiefComplaint}</p>
+        <p>{currentData.miraOSsummary.chiefComplaint}</p>
         {isProviderView ? <ProviderView /> : <CareNavigatorView />}
       </div>
     </div>
